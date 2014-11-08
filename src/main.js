@@ -9,7 +9,7 @@ var init = function (thoughtpad) {
 compile = function *(obj) {
     if (obj.ext !== "md") return;
 
-    _thoughtpad.notify("html-compile-complete", markdown.toHTML(obj.contents));
+    yield _thoughtpad.notify("html-compile-complete", markdown.toHTML(obj.contents));
 };
 
 module.exports = {

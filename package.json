@@ -18,7 +18,8 @@
     "should": "~3.3.2",
     "mocha": "~1.21.4",
     "coveralls": "~2.11.2",
-    "istanbul-harmony": "~0.3.0"
+    "istanbul-harmony": "~0.3.0",
+    "co": "~3.1.0"
   },
   "main": "./src/main.js",
   "scripts": {

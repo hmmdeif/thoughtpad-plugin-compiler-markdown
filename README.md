@@ -18,7 +18,7 @@ var thoughtpad = man.registerPlugins([markdown]);
 thoughtpad.subscribe("html-compile-complete", function (data) {
     console.log("HTML is returned here"); 
 });
-thoughtpad.notify("html-compile-request", { ext: "md", contents: "your markdown code here" });
+yield thoughtpad.notify("html-compile-request", { ext: "md", contents: "your markdown code here", name: "name of the file" });
 ```
 
 ## Tests

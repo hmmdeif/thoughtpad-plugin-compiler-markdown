@@ -1,15 +1,20 @@
-var markdown = require('markdown').markdown,
-    _thoughtpad;
+var markdown = require('marked');
 
 var init = function (thoughtpad) {
-    _thoughtpad = thoughtpad;
-    _thoughtpad.subscribe("html-compile-request", compile);
+    thoughtpad.subscribe("html-compile-request", compile);
 },
 
 compile = function *(obj) {
     if (obj.ext !== "md") return;
 
-    yield _thoughtpad.notify("html-compile-complete", markdown.toHTML(obj.contents));
+    // The user can override this using the eventData config variable
+    var data = {};
+
+    if (obj.thoughtpad.config && obj.thoughtpad.config.eventData && obj.thoughtpad.config.eventData['html-compile']) {
+        data = obj.thoughtpad.config.eventData['html-compile'];
+    }
+
+    yield obj.thoughtpad.notify("html-compile-complete", { contents: markdown(obj.contents, data), name: obj.name });
 };
 
 module.exports = {

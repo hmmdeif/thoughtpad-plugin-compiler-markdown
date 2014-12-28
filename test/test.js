@@ -30,14 +30,25 @@ describe("markdown compilation plugin", function () {
     });
 
     it("should compile markdown", function (done) {
-        thoughtpad = man.registerPlugins([app]);
+        thoughtpad = man.registerPlugins([app]),
+        contents = "",
+        name = "";
 
-        thoughtpad.subscribe("html-compile-complete", function *(contents) {
-            contents.should.equal("<h3>Heading</h3>\n\n<p>Some text</p>\n\n<p>Some more text</p>");
+        thoughtpad.config = {
+            eventData: {
+                'html-compile': {}
+            }
+        };
+
+        thoughtpad.subscribe("html-compile-complete", function *(res) {
+            contents = res.contents;
+            name = res.name;
         });
 
         co(function *() {
-            yield thoughtpad.notify("html-compile-request", { ext: "md", contents: "### Heading\n\nSome text\n\nSome more text" });
+            yield thoughtpad.notify("html-compile-request", { ext: "md", name: 'hello', contents: "### Heading\n\nSome text\n\nSome more text" });
+            contents.should.equal("<h3 id=\"heading\">Heading</h3>\n<p>Some text</p>\n<p>Some more text</p>\n");
+            name.should.equal('hello');
             done();
         })();
     });

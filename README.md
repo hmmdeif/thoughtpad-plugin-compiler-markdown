@@ -25,7 +25,7 @@ yield thoughtpad.notify("html-compile-request", { ext: "md", contents: "your mar
 
 Ensure you have globally installed mocha - `npm -g install mocha`. Then you can run:
 
-`mocha --harmony-generators`
+`mocha`
 
 Alternatively if you are in a *NIX environment `npm test` will run the tests plus coverage data.
 
